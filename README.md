@@ -1,9 +1,14 @@
+## Spider Shield
+
+🚧 Under Construction 🚧
+
+An AT protocol labeling service that blocks photos of spiders from your Bluesky experience. Operated by [@flaniel.bsky.social](https://bsky.app/profile/flaniel.bsky.social), and inspired by the moderation example from [Bluesky’s Stackable Approach to Moderation](https://bsky.social/about/blog/03-12-2024-stackable-moderation), this service consumes from the Bluesky firehose and forwards new images to Anthropic's [Messages API](https://docs.anthropic.com/claude/docs/vision#3-example-multiple-images-with-a-system-prompt) to get a yes/no verdict on whether each image contains a spider.
+
 ## Setup Instructions
 Copy the `build/.env.template` file to a new `.env` file:
 ```
 cp build/.env.template .env
 ```
-
 
 Update the `.env` with your Anthropic API key by following these steps: https://docs.anthropic.com/claude/docs/getting-access-to-claude#step-3-generate-an-api-key
 ```
