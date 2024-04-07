@@ -1,0 +1,5 @@
+anthropic==0.21.0
+atproto==0.0.46
+Flask==3.0.2
+kafka-python==2.0.2
+python-snappy==0.7.1

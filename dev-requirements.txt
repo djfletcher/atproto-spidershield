@@ -1,0 +1,7 @@
+autoflake
+black
+click
+colorama
+ipdb
+isort
+mypy
