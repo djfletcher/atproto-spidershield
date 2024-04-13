@@ -1,4 +1,3 @@
-
 import anthropic
 
 HAIKU_MODEL_NAME = "claude-3-haiku-20240307"

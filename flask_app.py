@@ -1,7 +1,7 @@
-import json
 import logging
 import os
 
+import libipld
 from flask import Flask, Response, request
 from kafka import TopicPartition
 
@@ -65,10 +65,11 @@ def subscribe_labels():
                 os.getenv("SUBSCRIBE_LABELS_CURSOR_MAX_ALLOWED_LOOKBACK", 0)
             )
             if cursor < next_offset - max_allowed_lookback:
-                return {
+                response = {
                     "name": "OutdatedCursor",
                     "message": f"Requested cursor '{cursor}' is more than max allowed backfill of {max_allowed_lookback} behind current seq {next_offset}",
-                }, 400
+                }
+                return libipld.encode_dag_cbor(response), 400
             kafka_consumer.seek(topic_partition, cursor)
 
         def generate():
@@ -77,7 +78,7 @@ def subscribe_labels():
                     "seq": message.offset,
                     "labels": [message.value],
                 }
-                yield json.dumps(block).encode("utf-8")
+                yield libipld.encode_dag_cbor(block)
 
             kafka_consumer.close()
 

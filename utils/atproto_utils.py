@@ -1,5 +1,4 @@
-
-from atproto import (CAR, AtUri, models)
+from atproto import CAR, AtUri, models
 
 
 def get_ops_by_type(commit: models.ComAtprotoSyncSubscribeRepos.Commit) -> dict:

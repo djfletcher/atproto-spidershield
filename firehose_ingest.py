@@ -1,6 +1,7 @@
 import os
 
-from atproto import (FirehoseSubscribeReposClient, models, parse_subscribe_repos_message)
+from atproto import (FirehoseSubscribeReposClient, models,
+                     parse_subscribe_repos_message)
 
 from labeler import Labeler
 from utils.atproto_utils import get_ops_by_type
