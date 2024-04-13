@@ -1,2 +1,2 @@
-.env
 venv
+build/anthropic_api_key.txt

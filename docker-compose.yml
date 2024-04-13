@@ -19,12 +19,12 @@ services:
     depends_on:
       - kafka
     environment:
-      # TODO: move this to secrets
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - KAFKA_VERSION=${KAFKA_VERSION}
       - KAFKA_BROKER=kafka:${KAFKA_PORT}
       - POST_LABELS_TOPIC=${POST_LABELS_TOPIC}
       - IMAGE_LABELS_TOPIC=${IMAGE_LABELS_TOPIC}
+    secrets:
+      - anthropic_api_key
 
   kafka:
     image: bitnami/kafka:latest
@@ -48,3 +48,7 @@ volumes:
     driver: local
   kafka_data:
     driver: local
+
+secrets:
+  anthropic_api_key:
+    file: ./build/anthropic_api_key.txt

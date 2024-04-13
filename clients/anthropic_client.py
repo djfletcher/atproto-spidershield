@@ -1,3 +1,5 @@
+import logging
+
 import anthropic
 
 HAIKU_MODEL_NAME = "claude-3-haiku-20240307"
@@ -35,7 +37,12 @@ class AnthropicClient:
     @property
     def client(self):
         if self._client is None:
-            self._client = anthropic.Anthropic()
+            try:
+                with open("/run/secrets/anthropic_api_key") as f:
+                    anthropic_api_key = f.read()
+                    self._client = anthropic.Anthropic(api_key=anthropic_api_key)
+            except Exception as e:
+                logging.exception("Failed to load anthropic api key from file")
         return self._client
 
     def phone_claude(self, image_data: bytes, media_type: str):

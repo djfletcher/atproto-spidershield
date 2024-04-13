@@ -8,19 +8,14 @@ An AT protocol labeling service that blocks photos of spiders from your Bluesky 
 - Reduce image sizes before sending to Claude to reduce input tokens and save $$$.
 
 ## Setup Instructions
-Copy the `build/.env.template` file to a new `.env` file:
+Paste in your Anthropic API key into a file called build/anthropic_api_key.txt. This will get pulled into docker as secret. Generate an API key by following these steps: https://docs.anthropic.com/claude/docs/getting-access-to-claude#step-3-generate-an-api-key
 ```
-cp build/.env.template .env
-```
-
-Update the `.env` with your Anthropic API key by following these steps: https://docs.anthropic.com/claude/docs/getting-access-to-claude#step-3-generate-an-api-key
-```
-ANTHROPIC_API_KEY=<your key here>
+echo -n "<your key here>" > build/anthropic_api_key.txt
 ```
 
 Make sure you keep these keys secret:
 ```
-chmod 600 .env  # restrict permissions so that only you can read the file
+chmod 600 build/anthropic_api_key.txt  # restrict permissions so that only you can read the file
 ```
 
 Export environment variables in current terminal session:
