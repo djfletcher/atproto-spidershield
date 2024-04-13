@@ -6,6 +6,7 @@ An AT protocol labeling service that blocks photos of spiders from your Bluesky 
 
 ## Next Up
 - Reduce image sizes before sending to Claude to reduce input tokens and save $$$.
+- Ingest firehose using multi-processing
 
 ## Setup Instructions
 Paste in your Anthropic API key into a file called build/anthropic_api_key.txt. This will get pulled into docker as secret. Generate an API key by following these steps: https://docs.anthropic.com/claude/docs/getting-access-to-claude#step-3-generate-an-api-key
@@ -25,8 +26,8 @@ source .env
 
 Build docker images:
 ```
-docker build -f build/firehose_ingest.Dockerfile -t firehose-ingest .
-docker build -f build/flask_app.Dockerfile -t flask-app .
+docker build -f build/firehose_ingest.Dockerfile -t bluesky-firehose-ingest .
+docker build -f build/flask_app.Dockerfile -t spidershield-api .
 ```
 
 Start docker containers:

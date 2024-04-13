@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  flask-app:
-    image: flask-app:latest
+  spidershield-api:
+    image: spidershield-api:latest
     ports:
       - 5001:5000
     depends_on:
@@ -14,8 +14,8 @@ services:
       - SUBSCRIBE_LABELS_CURSOR_MAX_ALLOWED_LOOKBACK=${SUBSCRIBE_LABELS_CURSOR_MAX_ALLOWED_LOOKBACK}
       - POST_LABELS_TOPIC=${POST_LABELS_TOPIC}
 
-  firehose-ingest:
-    image: firehose-ingest:latest
+  bluesky-firehose-ingest:
+    image: bluesky-firehose-ingest:latest
     depends_on:
       - kafka
     environment:
