@@ -85,14 +85,16 @@ class Labeler:
             self.kafka_client.producer.send(
                 self.post_labels_topic, key=post["cid"], value=post_label
             )
-            blob_cid = image.image.cid
-            image_cid = blob_cid._cid
-            image_label = self.make_image_label(
-                image_cid, post["uri"], post["author"], decision, created_at
-            )
-            self.kafka_client.producer.send(
-                self.image_labels_topic, key=image_cid, value=image_label
-            )
+            # this is all commented out because this Bluesky post confirmed that images can't be labeled directly yet:
+            # https://bsky.app/profile/foysal.codes/post/3kqbrnqbsqp2z
+            # blob_cid = image.image.cid
+            # image_cid = blob_cid._cid
+            # image_label = self.make_image_label(
+            #     image_cid, post["uri"], post["author"], decision, created_at
+            # )
+            # self.kafka_client.producer.send(
+            #     self.image_labels_topic, key=image_cid, value=image_label
+            # )
 
     def process_image(self, image: Image, author_did: str):
         """
@@ -111,8 +113,9 @@ class Labeler:
         downloaded_blob = self.sync_namespace.get_blob(
             {"cid": blob_cid._cid, "did": author_did}
         )
-        decoded_blob = base64.b64encode(downloaded_blob).decode("utf-8")
-        return self.anthropic_client.phone_claude(decoded_blob, image.image.mime_type)
+        # Leaving this commented out line in here to remember how to decode images if needed
+        # decoded_blob = base64.b64encode(downloaded_blob).decode("utf-8")
+        return self.anthropic_client.phone_claude(downloaded_blob, image.image.mime_type)
 
     @staticmethod
     def make_post_label(post: dict, val: str, created_at: datetime) -> Label:
@@ -155,6 +158,8 @@ class Labeler:
         image_cid: str, uri: str, author_did: str, val: str, created_at: datetime
     ) -> Label:
         """
+        This Bluesky post confirmed that images can't be labeled directly yet: https://bsky.app/profile/foysal.codes/post/3kqbrnqbsqp2z
+
         example image:
         {'alt': '',
          'aspect_ratio': {'height': 1613,

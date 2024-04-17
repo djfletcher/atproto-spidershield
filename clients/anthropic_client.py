@@ -1,4 +1,6 @@
 import logging
+from io import BytesIO
+from PIL import Image
 
 import anthropic
 
@@ -45,10 +47,22 @@ class AnthropicClient:
                 logging.exception("Failed to load anthropic api key from file")
         return self._client
 
-    def phone_claude(self, image_data: bytes, media_type: str):
+    @staticmethod
+    def compress_image(image_data: str, media_type: str) -> bytes:
+        # turn "image/jpeg" into "JPEG", which is expected by Pillow
+        img_format = media_type.split("/")[-1].upper()
+        image = Image.open(BytesIO(image_data), formats=[img_format])
+        compressed_image = BytesIO()
+        print(f"Saving image at 50% quality")
+        image.save(compressed_image, format=img_format, quality=50)  # Adjust the quality as needed
+        compressed_image.seek(0)
+        return compressed_image
+
+    def phone_claude(self, image_data: str, media_type: str):
         if media_type not in SUPPORTED_MEDIA_TYPES:
             print(f"Skipping because {media_type} is not a supported media type")
 
+        compressed_image = self.compress_image(image_data, media_type)
         print("phoning claude...")
         return self.client.messages.create(
             model=HAIKU_MODEL_NAME,
@@ -66,7 +80,7 @@ class AnthropicClient:
                             "source": {
                                 "type": "base64",
                                 "media_type": media_type,
-                                "data": image_data,
+                                "data": compressed_image,
                             },
                         },
                         {

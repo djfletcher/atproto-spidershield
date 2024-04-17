@@ -5,7 +5,6 @@
 An AT protocol labeling service that blocks photos of spiders from your Bluesky experience. Operated by [@flaniel.bsky.social](https://bsky.app/profile/flaniel.bsky.social), and inspired by the moderation example from [Bluesky’s Stackable Approach to Moderation](https://bsky.social/about/blog/03-12-2024-stackable-moderation), this service consumes from the Bluesky firehose and forwards new images to Anthropic's [Messages API](https://docs.anthropic.com/claude/docs/vision#3-example-multiple-images-with-a-system-prompt) to get a yes/no verdict on whether each image contains a spider.
 
 ## Next Up
-- Reduce image sizes before sending to Claude to reduce input tokens and save $$$.
 - Ingest firehose using multi-processing
 
 ## Setup Instructions
